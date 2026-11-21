@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Using AI Assistants at Work</title>
+<style>
+body{margin:0;background:#f6f3ee;color:#1d1b18;font:17px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:720px;margin:0 auto;padding:40px 20px 60px}
+h1{font-size:30px;margin:0 0 6px} .sub{color:#6b645a;margin:0 0 28px}
+.q{background:#fff;border:1px solid #e2dbcf;border-radius:12px;padding:20px 22px;margin-bottom:18px}
+.q h2{font-size:18px;margin:0 0 4px} .meta{font-size:13px;color:#6b645a;margin-bottom:12px}
+button.opt{display:block;width:100%;text-align:left;font:inherit;background:#faf8f4;border:1px solid #d9d1c3;border-radius:8px;padding:10px 14px;margin:8px 0;cursor:pointer}
+button.opt:hover:not(:disabled){border-color:#b4532a} button.opt:focus-visible{outline:2px solid #b4532a;outline-offset:2px}
+button.opt:disabled{color:#1d1b18;cursor:default}
+button.opt.right{background:#e6f2e7;border-color:#5a9a66} button.opt.wrong{background:#f8e3df;border-color:#c0614f}
+.fb{margin-top:10px;padding:10px 14px;border-radius:8px;background:#f3eee5;display:none} .fb.show{display:block}
+#score{font-weight:600;margin-top:24px}
+</style></head><body><main>
+<h1>Using AI Assistants at Work</h1><p class="sub">5 questions · choose an answer to see feedback</p>
+<div id="quiz"></div><p id="score" aria-live="polite"></p>
+</main>
+<script>
+const Q={"questions": [{"stem": "Which of these tasks is the best fit for an AI assistant?", "bloom_level": "Understand", "options": [{"text": "Drafting a first version of a team announcement", "correct": true, "feedback": "Drafting is a strength. You review and edit before sending."}, {"text": "Calculating final payroll totals for the month", "correct": false, "feedback": "AI can make math errors. Use your payroll system or a spreadsheet."}, {"text": "Deciding which employee gets a promotion", "correct": false, "feedback": "Decisions about people need human judgment and context the AI doesn't have."}, {"text": "Confirming a vendor's price for today", "correct": false, "feedback": "The AI may give an outdated or invented number. Check the vendor directly."}]}, {"stem": "Jordan needs to tell a long-time client their order is delayed one week by a supplier. Which prompt will get the most usable first draft?", "bloom_level": "Apply", "options": [{"text": "\"Write an email to our client about their order being delayed by our supplier.\"", "correct": false, "feedback": "It has a goal and some context, but no format, so the AI has to guess the tone and length."}, {"text": "\"Write a short apology email to a long-time client about a one-week supplier delay. Warm, under 120 words.\"", "correct": true, "feedback": "It has a clear goal, the context (who, what, why) and the format (tone and length)."}, {"text": "\"Write a professional email that is warm, friendly and under 120 words, with a helpful tone.\"", "correct": false, "feedback": "Format only. The AI doesn't know what happened or who the email is for."}, {"text": "\"Our supplier delayed a long-time client's order by one week, and they are a valued customer.\"", "correct": false, "feedback": "Context only. There's no goal, so the AI doesn't know what you want it to write."}]}, {"stem": "A coworker wants to paste a customer's name, address and account number into a public AI tool to draft a letter. What should they do instead?", "bloom_level": "Apply", "options": [{"text": "Replace the details with placeholders like [Customer] and fill them in afterward", "correct": true, "feedback": "The AI drafts the letter, and the personal data never leaves your hands."}, {"text": "Paste it in, since most AI tools delete chat history automatically after a while", "correct": false, "feedback": "Many tools store what you paste. Don't assume it gets deleted."}, {"text": "Paste it in, as long as the customer has been with the company for years", "correct": false, "feedback": "How long someone has been a customer doesn't change the data risk."}, {"text": "Share just the account number and leave the customer's name and address out", "correct": false, "feedback": "An account number on its own is still sensitive. Use a placeholder instead."}]}, {"stem": "The AI gives you a statistic to put in a report for leadership. What should you do first?", "bloom_level": "Apply", "options": [{"text": "Confirm it in a reliable source before you use it", "correct": true, "feedback": "AI can invent numbers that sound real. Facts always get checked."}, {"text": "Ask the AI to double-check whether the number is right", "correct": false, "feedback": "The AI may repeat the same wrong answer confidently. Check a real source."}, {"text": "Round the number so it looks cleaner in the report", "correct": false, "feedback": "Rounding a made-up number doesn't make it true."}, {"text": "Use it as-is, since AI tools are usually accurate", "correct": false, "feedback": "\"Usually\" isn't good enough for a report with your name on it."}]}, {"stem": "Which of the following is NOT one of the four prompt habits?", "bloom_level": "Remember", "options": [{"text": "Goal", "correct": false, "feedback": "Incorrect."}, {"text": "Context", "correct": false, "feedback": "Incorrect."}, {"text": "Speed, because a fast prompt always gets the best answer from the assistant", "correct": true, "feedback": "Correct."}, {"text": "All of the above", "correct": false, "feedback": "Incorrect."}]}]};
+const root=document.getElementById('quiz');let answered=0,right=0;
+Q.questions.forEach((q,n)=>{
+  const d=document.createElement('section');d.className='q';
+  d.innerHTML=`<h2>${n+1}. ${esc(q.stem)}</h2><div class="meta">${esc(q.bloom_level)}</div>`;
+  const fb=document.createElement('div');fb.className='fb';fb.setAttribute('aria-live','polite');
+  q.options.forEach(o=>{
+    const b=document.createElement('button');b.className='opt';b.textContent=o.text;
+    b.onclick=()=>{
+      d.querySelectorAll('button').forEach((x,i)=>{x.disabled=true;if(q.options[i].correct)x.classList.add('right');});
+      if(!o.correct)b.classList.add('wrong');
+      fb.innerHTML='<strong>'+(o.correct?'Correct. ':'Not quite. ')+'</strong>'+esc(o.feedback);fb.classList.add('show');
+      answered++;if(o.correct)right++;
+      if(answered===Q.questions.length)document.getElementById('score').textContent=`Score: ${right} of ${answered}`;
+    };
+    d.appendChild(b);
+  });
+  d.appendChild(fb);root.appendChild(d);
+});
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+</script></body></html>
