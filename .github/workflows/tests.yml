@@ -15,7 +15,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install ".[dev]"
+      - run: pip install ".[dev,diagnostic]"
       - run: pytest -q
       - name: Demo run
         run: quizgen generate examples/sample-training.md --demo -f md -f html -f gift -f csv --out /tmp/quiz
+      - name: Diagnostic demo run
+        run: quizgen diagnose examples/diagnostic/ai-at-work.txt --demo --out /tmp/diag

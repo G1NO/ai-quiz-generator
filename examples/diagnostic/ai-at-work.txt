@@ -1,0 +1,18 @@
+Using AI Assistants at Work
+
+AI assistants like ChatGPT, Claude, and Copilot can draft emails, summarize documents, and help you think through problems. Used well, they save real time. Used carelessly, they can leak company data or put wrong information in front of customers.
+
+How these tools work
+An AI assistant predicts likely text based on patterns it learned from huge amounts of writing. It does not look facts up the way a search engine does unless it has been connected to a search tool, and it does not "know" whether what it wrote is true. That is why it can state something wrong with complete confidence. These made-up answers are often called hallucinations.
+
+Protecting company data
+Anything you type into a public AI tool may be stored by the vendor and, depending on the settings, used to train future models. Treat the prompt box like an email to someone outside the company. Never paste customer personal information, passwords, unreleased financials, or confidential contracts into a tool your company has not approved. Approved enterprise tools usually come with agreements that keep your data out of training, which is why IT asks you to use them instead of free consumer versions.
+
+Writing better prompts
+The quality of the answer depends on the quality of the request. Good prompts give context (who the audience is and what the output is for), a clear task, and the format you want back. If the first answer misses, refine the prompt and try again rather than starting over. Giving the assistant an example of what you want is one of the most reliable ways to improve results.
+
+Checking the output
+You are responsible for anything you send, even if an AI drafted it. Verify facts, numbers, names, and quotes against a trusted source before using them. Be especially careful with anything legal, medical, financial, or customer-facing. A confident tone is not evidence of accuracy.
+
+When to use it and when not to
+AI assistants are strong at first drafts, summarizing, brainstorming, and rewording. They are weak at tasks that need current information they don't have, exact calculations, or judgment calls that depend on context only you know. Use them to speed up your work, not to replace your judgment.
