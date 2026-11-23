@@ -2,7 +2,59 @@
 
 [![Tests](https://github.com/G1NO/ai-quiz-generator/actions/workflows/tests.yml/badge.svg)](https://github.com/G1NO/ai-quiz-generator/actions/workflows/tests.yml)
 
-A command-line tool that turns training content into a draft multiple-choice quiz using AI (Claude or OpenAI), and then **checks the questions the way an instructional designer would**.
+Turns training content into a draft multiple-choice quiz using AI, and then **checks the questions the way an instructional designer would**.
+
+It has two modes:
+
+| | **Quick mode** (`quizgen generate`) | **Diagnostic mode** (web app + `quizgen diagnose`) |
+|---|---|---|
+| What you get | A clean quiz fast | A concept map, then a quiz where every wrong answer targets a known misconception |
+| Review | Item-writing checks | Item-writing checks + structural checks + AI rubric review |
+| Models | Claude or OpenAI | Claude |
+| Dependencies | None (standard library) | Optional extras |
+
+---
+
+## Diagnostic mode
+
+**[Try the web app →](#)** *(Streamlit link goes here)*
+
+![Concept map](docs/concept-map.png)
+
+Most AI quiz tools give you questions with random filler distractors. If a learner picks a wrong one, you learn nothing about *why*. Diagnostic mode maps the content first:
+
+1. **Concept map.** Learning objectives, key concepts, which concepts depend on which, and 1–3 misconceptions per concept (with why learners fall into them). You see it as a graph and can edit it before any questions are written. That's where an SME review belongs.
+2. **Quiz.** Questions follow prerequisite order and lean toward apply/analyze. Every wrong option is tagged with the misconception it targets, so a wrong answer becomes a diagnosis. Every option gets its own feedback.
+3. **Quality review, two ways.**
+   - *AI rubric:* alignment, accuracy, distractor quality, clarity, accessibility, and bias, scored 1–4, with issues and suggested fixes.
+   - *Rule-based checks:* longest-answer giveaways, hidden negatives, all/none of the above, distractors with no misconception or from the wrong concept, answer-key patterns, too much recall, coverage gaps, prerequisite order, broken references, and loops in the map.
+   - Questions flagged by **both** reviewers get surfaced first. An LLM grading an LLM has blind spots; plain code catches the cheap stuff every time.
+4. **Export.** Moodle GIFT, CSV, Markdown for SME review, or the full project as JSON to reload later.
+
+![Quality review](docs/quality-review.png)
+
+The bundled demo has a few flaws on purpose so you can watch both reviewers catch them.
+
+### Run the web app
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+Demo mode works without a key. For live mode, paste an [Anthropic API key](https://console.anthropic.com/) in the sidebar, or set `ANTHROPIC_API_KEY` (env var or `.streamlit/secrets.toml`).
+
+### Or from the command line
+
+```bash
+pip install ".[diagnostic]"
+quizgen diagnose examples/diagnostic/ai-at-work.txt --demo          # offline example
+quizgen diagnose my-training.md -n 8 -a "new hires" -f md -f gift    # live, needs ANTHROPIC_API_KEY
+```
+
+---
+
+## Quick mode
 
 Most AI quiz tools stop at "here are some questions." This one is built around item-writing best practices:
 
@@ -122,9 +174,15 @@ training content ──► prompt built from item-writing rules ──► AI mod
 | `quizgen/exporters.py` | Markdown, CSV, GIFT, JSON and HTML output |
 | `quizgen/llm.py` | Small provider wrappers (Anthropic, OpenAI) |
 | `quizgen/cli.py` | Command-line interface |
+| `quizgen/diagnostic/schemas.py` | Diagnostic mode: Pydantic models for the concept map, quiz, and review |
+| `quizgen/diagnostic/llm.py` | Claude wrapper: forced tool use for structured output, retries with the validation error |
+| `quizgen/diagnostic/pipeline.py` | The three stages: map, quiz, review |
+| `quizgen/diagnostic/checks.py` | Rule-based structural and item-writing checks |
+| `quizgen/diagnostic/graph.py`, `export.py` | Concept map graph; GIFT/CSV/Markdown/JSON |
+| `app.py` | Streamlit web app |
 
 Design choices:
-- **No required dependencies.** The core runs on the Python standard library. AI SDKs are optional extras.
+- **No required dependencies.** Quick mode runs on the Python standard library. AI SDKs and diagnostic mode are optional extras.
 - **Provider-agnostic.** Each provider is one small class with a single `complete()` method, so adding another is easy and testing is simple.
 - **Fails safely.** Malformed AI output is caught, bad questions are dropped with a clear reason, and errors print as plain messages, not stack traces.
 

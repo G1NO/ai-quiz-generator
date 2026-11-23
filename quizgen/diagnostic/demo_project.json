@@ -1,0 +1,468 @@
+{
+  "source": "Using AI Assistants at Work\n\nAI assistants like ChatGPT, Claude, and Copilot can draft emails, summarize documents, and help you think through problems. Used well, they save real time. Used carelessly, they can leak company data or put wrong information in front of customers.\n\nHow these tools work\nAn AI assistant predicts likely text based on patterns it learned from huge amounts of writing. It does not look facts up the way a search engine does unless it has been connected to a search tool, and it does not \"know\" whether what it wrote is true. That is why it can state something wrong with complete confidence. These made-up answers are often called hallucinations.\n\nProtecting company data\nAnything you type into a public AI tool may be stored by the vendor and, depending on the settings, used to train future models. Treat the prompt box like an email to someone outside the company. Never paste customer personal information, passwords, unreleased financials, or confidential contracts into a tool your company has not approved. Approved enterprise tools usually come with agreements that keep your data out of training, which is why IT asks you to use them instead of free consumer versions.\n\nWriting better prompts\nThe quality of the answer depends on the quality of the request. Good prompts give context (who the audience is and what the output is for), a clear task, and the format you want back. If the first answer misses, refine the prompt and try again rather than starting over. Giving the assistant an example of what you want is one of the most reliable ways to improve results.\n\nChecking the output\nYou are responsible for anything you send, even if an AI drafted it. Verify facts, numbers, names, and quotes against a trusted source before using them. Be especially careful with anything legal, medical, financial, or customer-facing. A confident tone is not evidence of accuracy.\n\nWhen to use it and when not to\nAI assistants are strong at first drafts, summarizing, brainstorming, and rewording. They are weak at tasks that need current information they don't have, exact calculations, or judgment calls that depend on context only you know. Use them to speed up your work, not to replace your judgment.\n",
+  "audience": "Non-technical office employees",
+  "concept_map": {
+    "topic": "Using AI Assistants at Work",
+    "learning_objectives": [
+      "Explain why an AI assistant can state wrong information confidently",
+      "Decide what information is safe to enter into an AI tool",
+      "Revise a prompt using context, task, format, and an example",
+      "Verify AI output before using it in work that others will see"
+    ],
+    "concepts": [
+      {
+        "id": "c1",
+        "name": "How AI assistants generate text",
+        "description": "They predict likely text from learned patterns. They don't look facts up unless connected to a search tool, and they don't know if what they wrote is true.",
+        "prerequisites": [],
+        "misconceptions": [
+          {
+            "id": "m1",
+            "description": "The AI searches the internet for every answer",
+            "why_it_happens": "Chat interfaces look like search boxes, so people assume they work the same way."
+          },
+          {
+            "id": "m2",
+            "description": "The AI pulls answers from a database of verified facts",
+            "why_it_happens": "Fluent, specific answers feel like they came from a reference source."
+          },
+          {
+            "id": "m3",
+            "description": "If the answer sounds confident, it's probably right",
+            "why_it_happens": "With people, confidence often signals knowledge, and the habit carries over."
+          }
+        ]
+      },
+      {
+        "id": "c2",
+        "name": "Hallucinations",
+        "description": "AI assistants can produce made-up details, like fake citations or numbers, that look real.",
+        "prerequisites": [
+          "c1"
+        ],
+        "misconceptions": [
+          {
+            "id": "m4",
+            "description": "Hallucinations only happen on obscure topics",
+            "why_it_happens": "People picture errors as rare glitches, not a normal side effect of how the tool works."
+          },
+          {
+            "id": "m5",
+            "description": "Asking the AI 'are you sure?' will catch its mistakes",
+            "why_it_happens": "It feels like double-checking, but the AI can confidently confirm its own error."
+          }
+        ]
+      },
+      {
+        "id": "c3",
+        "name": "Data exposure in public AI tools",
+        "description": "What you type into a public tool may be stored by the vendor and possibly used for training. Treat the prompt like an email to an outsider.",
+        "prerequisites": [],
+        "misconceptions": [
+          {
+            "id": "m6",
+            "description": "Deleting the chat removes the data from the vendor",
+            "why_it_happens": "Deleting things on your own screen feels like deleting them everywhere."
+          },
+          {
+            "id": "m7",
+            "description": "A small amount of customer data is fine to paste",
+            "why_it_happens": "It feels low-risk when it's just one record."
+          },
+          {
+            "id": "m8",
+            "description": "Chats in AI tools are private to your account",
+            "why_it_happens": "A login makes the tool feel personal, like a private notebook."
+          }
+        ]
+      },
+      {
+        "id": "c4",
+        "name": "Approved enterprise tools",
+        "description": "Company-approved tools come with agreements that keep your data out of model training.",
+        "prerequisites": [
+          "c3"
+        ],
+        "misconceptions": [
+          {
+            "id": "m9",
+            "description": "Enterprise and free versions are basically the same",
+            "why_it_happens": "The interfaces look alike, so the difference in data handling isn't visible."
+          },
+          {
+            "id": "m10",
+            "description": "An approved tool means you no longer need to use judgment",
+            "why_it_happens": "Approval feels like blanket permission."
+          }
+        ]
+      },
+      {
+        "id": "c5",
+        "name": "Writing effective prompts",
+        "description": "Good prompts give context, a clear task, and the output format. Refine instead of starting over, and give an example.",
+        "prerequisites": [],
+        "misconceptions": [
+          {
+            "id": "m11",
+            "description": "Shorter, vaguer prompts give the AI room to do better",
+            "why_it_happens": "People expect the AI to fill in the gaps the way a coworker would."
+          },
+          {
+            "id": "m12",
+            "description": "A bad first answer means the tool can't do the task",
+            "why_it_happens": "People judge the tool on one try instead of treating it as a draft."
+          },
+          {
+            "id": "m13",
+            "description": "Re-running the same prompt is the best fix for a bad answer",
+            "why_it_happens": "Sometimes it works by luck, so it feels like a strategy."
+          }
+        ]
+      },
+      {
+        "id": "c6",
+        "name": "Verifying output and owning it",
+        "description": "You're responsible for anything you send, even if AI drafted it. Check facts, numbers, names, and quotes.",
+        "prerequisites": [
+          "c1",
+          "c2"
+        ],
+        "misconceptions": [
+          {
+            "id": "m14",
+            "description": "If the AI made the mistake, the AI (or vendor) is responsible",
+            "why_it_happens": "It feels unfair to own errors you didn't write."
+          },
+          {
+            "id": "m15",
+            "description": "Only numbers need to be checked",
+            "why_it_happens": "Numbers look like the 'factual' part; wording feels safe."
+          }
+        ]
+      },
+      {
+        "id": "c7",
+        "name": "Choosing the right tasks for AI",
+        "description": "Strong at drafts, summaries, brainstorming, rewording. Weak at current info, exact math, and context-heavy judgment calls.",
+        "prerequisites": [
+          "c1"
+        ],
+        "misconceptions": [
+          {
+            "id": "m16",
+            "description": "AI assistants are reliable at exact calculations",
+            "why_it_happens": "Computers are good at math, so people assume AI chat tools are too."
+          },
+          {
+            "id": "m17",
+            "description": "AI assistants always know about recent events",
+            "why_it_happens": "They seem to know about everything else."
+          }
+        ]
+      }
+    ]
+  },
+  "quiz": {
+    "topic": "Using AI Assistants at Work",
+    "questions": [
+      {
+        "id": "q1",
+        "concept_id": "c1",
+        "bloom_level": "understand",
+        "stem": "A coworker says, \"I asked the AI, so the answer must be current and fact-checked.\" What's the most accurate response?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Unless it's connected to search, it predicts text from patterns and doesn't check facts.",
+            "misconception_id": null,
+            "feedback": "Right. It generates likely text. It doesn't look things up or verify them on its own."
+          },
+          {
+            "id": "b",
+            "text": "That's true, because AI assistants search the web for every answer.",
+            "misconception_id": "m1",
+            "feedback": "Not quite. Without a connected search tool, the AI isn't looking anything up."
+          },
+          {
+            "id": "c",
+            "text": "That's true, because the AI draws from a database of verified facts.",
+            "misconception_id": "m2",
+            "feedback": "Not quite. There's no fact database behind the answer, just patterns it learned."
+          },
+          {
+            "id": "d",
+            "text": "That's true as long as the answer sounds confident and detailed.",
+            "misconception_id": "m3",
+            "feedback": "Confidence isn't evidence. The AI sounds just as sure when it's wrong."
+          }
+        ],
+        "correct_option_id": "a",
+        "explanation": "AI assistants predict likely text. They don't verify facts unless connected to a tool that does."
+      },
+      {
+        "id": "q2",
+        "concept_id": "c2",
+        "bloom_level": "apply",
+        "stem": "You ask an AI for the section number of a well-known industry regulation, and it gives you one. What's the safest next step?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Use it, since errors mostly happen on obscure topics.",
+            "misconception_id": "m4",
+            "feedback": "Hallucinations happen on familiar topics too, especially with specific details like section numbers."
+          },
+          {
+            "id": "b",
+            "text": "Ask the AI if it's sure, and use it if it says yes.",
+            "misconception_id": "m5",
+            "feedback": "The AI can confidently confirm its own mistake. That's not a real check."
+          },
+          {
+            "id": "c",
+            "text": "Check the section number against the official regulation.",
+            "misconception_id": null,
+            "feedback": "Right. Specific details like citations are exactly where made-up answers show up."
+          },
+          {
+            "id": "d",
+            "text": "Use it, since the AI pulled it from its fact database.",
+            "misconception_id": "m2",
+            "feedback": "There's no verified fact database behind the answer."
+          }
+        ],
+        "correct_option_id": "c",
+        "explanation": "Specific details like citations are a common place for hallucinations. Check them against the source."
+      },
+      {
+        "id": "q3",
+        "concept_id": "c3",
+        "bloom_level": "apply",
+        "stem": "Maria wants a free AI tool to summarize a customer complaint that includes the customer's name, address, and account number. Her company hasn't approved the tool. What should she do?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Paste it in, then delete the chat so the data is gone.",
+            "misconception_id": "m6",
+            "feedback": "Deleting the chat on your screen doesn't mean the vendor deleted it."
+          },
+          {
+            "id": "b",
+            "text": "Remove the personal details first, or use an approved tool.",
+            "misconception_id": null,
+            "feedback": "Right. Personal data shouldn't go into a tool the company hasn't approved."
+          },
+          {
+            "id": "c",
+            "text": "Paste it in, since one customer's details is a small risk.",
+            "misconception_id": "m7",
+            "feedback": "Even one record is a real privacy problem for that customer and the company."
+          },
+          {
+            "id": "d",
+            "text": "Paste it in, since her chats are private to her account.",
+            "misconception_id": "m8",
+            "feedback": "A login doesn't make it private. The vendor may store and use what you type."
+          }
+        ],
+        "correct_option_id": "b",
+        "explanation": "Treat the prompt box like an email to someone outside the company. Strip personal data or use an approved tool."
+      },
+      {
+        "id": "q4",
+        "concept_id": "c5",
+        "bloom_level": "apply",
+        "stem": "Devon's first AI draft of a team announcement came back too formal and too long. What should he do next?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Decide the tool can't write announcements.",
+            "misconception_id": "m12",
+            "feedback": "One miss doesn't mean the tool can't do it. Treat the first answer as a draft."
+          },
+          {
+            "id": "b",
+            "text": "Send a shorter, vaguer prompt instead.",
+            "misconception_id": "m11",
+            "feedback": "Less context usually makes results worse, not better."
+          },
+          {
+            "id": "c",
+            "text": "Re-run the exact same prompt in a new chat.",
+            "misconception_id": "m13",
+            "feedback": "Same request, same problem. Refining the prompt works better than rolling the dice."
+          },
+          {
+            "id": "d",
+            "text": "Tell it who the audience is, the tone and length he wants, and paste in a past announcement he liked as an example, then ask it to revise.",
+            "misconception_id": null,
+            "feedback": "Right. Context, format, and an example are the most reliable ways to improve a result."
+          }
+        ],
+        "correct_option_id": "d",
+        "explanation": "Refine with context, format, and an example instead of starting over or giving up."
+      },
+      {
+        "id": "q5",
+        "concept_id": "c6",
+        "bloom_level": "analyze",
+        "stem": "A manager sends an AI-drafted customer email without reading it, and it lists the wrong refund window. Who is responsible for the error?",
+        "options": [
+          {
+            "id": "a",
+            "text": "The manager, because whoever sends AI output owns it.",
+            "misconception_id": null,
+            "feedback": "Right. You're responsible for anything you send, no matter who or what drafted it."
+          },
+          {
+            "id": "b",
+            "text": "The AI vendor, because their tool wrote the wrong policy.",
+            "misconception_id": "m14",
+            "feedback": "The vendor didn't send the email. The person who sent it owns the content."
+          },
+          {
+            "id": "c",
+            "text": "No one, since AI errors are expected and unavoidable.",
+            "misconception_id": "m14",
+            "feedback": "Errors are expected, which is exactly why checking before sending is required."
+          },
+          {
+            "id": "d",
+            "text": "No one, since only numbers need checking, not policy text.",
+            "misconception_id": "m15",
+            "feedback": "Policy wording, names, and quotes need checking too, not just numbers."
+          }
+        ],
+        "correct_option_id": "a",
+        "explanation": "AI can draft, but the sender is accountable. Verify everything customer-facing."
+      },
+      {
+        "id": "q6",
+        "concept_id": "c7",
+        "bloom_level": "evaluate",
+        "stem": "Which of these tasks is an AI assistant not well suited to handle on its own?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Summarizing a long meeting transcript",
+            "misconception_id": null,
+            "feedback": "AI assistants are strong at summarizing."
+          },
+          {
+            "id": "b",
+            "text": "Rewording a paragraph to sound friendlier",
+            "misconception_id": null,
+            "feedback": "AI assistants are strong at rewording."
+          },
+          {
+            "id": "c",
+            "text": "Calculating exact commission payouts for 40 employees",
+            "misconception_id": null,
+            "feedback": "Right. Exact calculations are a weak spot. Use a spreadsheet or payroll system."
+          },
+          {
+            "id": "d",
+            "text": "Drafting a first version of a job posting",
+            "misconception_id": null,
+            "feedback": "First drafts are a strength."
+          }
+        ],
+        "correct_option_id": "c",
+        "explanation": "AI assistants are weak at exact math and current information. Use them for drafts, summaries, and rewording."
+      }
+    ]
+  },
+  "evaluation": {
+    "evaluations": [
+      {
+        "question_id": "q1",
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "distractor_quality": 4,
+          "clarity": 3,
+          "accessibility": 3,
+          "bias": 4
+        },
+        "issues": [
+          "The quote in the stem bundles two claims ('current' and 'fact-checked'), which makes the item slightly harder to parse than it needs to be."
+        ],
+        "suggested_fix": null
+      },
+      {
+        "question_id": "q2",
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "distractor_quality": 4,
+          "clarity": 4,
+          "accessibility": 4,
+          "bias": 4
+        },
+        "issues": [],
+        "suggested_fix": null
+      },
+      {
+        "question_id": "q3",
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "distractor_quality": 4,
+          "clarity": 3,
+          "accessibility": 3,
+          "bias": 4
+        },
+        "issues": [
+          "Stem is long for a non-technical audience (about 30 words)."
+        ],
+        "suggested_fix": "Trim to: 'Maria wants an unapproved AI tool to summarize a complaint with a customer's name and account number. What should she do?'"
+      },
+      {
+        "question_id": "q4",
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "distractor_quality": 3,
+          "clarity": 2,
+          "accessibility": 3,
+          "bias": 4
+        },
+        "issues": [
+          "The correct answer is much longer and more detailed than the distractors, which gives it away to test-wise learners.",
+          "Option b is weaker than the others; few learners would pick it."
+        ],
+        "suggested_fix": "Shorten d to 'Revise the prompt with audience, tone, length, and an example.' and lengthen the distractors to match."
+      },
+      {
+        "question_id": "q5",
+        "scores": {
+          "alignment": 4,
+          "accuracy": 4,
+          "distractor_quality": 4,
+          "clarity": 4,
+          "accessibility": 4,
+          "bias": 4
+        },
+        "issues": [],
+        "suggested_fix": null
+      },
+      {
+        "question_id": "q6",
+        "scores": {
+          "alignment": 3,
+          "accuracy": 4,
+          "distractor_quality": 1,
+          "clarity": 2,
+          "accessibility": 3,
+          "bias": 4
+        },
+        "issues": [
+          "Negative stem ('not') is easy to miss; learners may answer the opposite question.",
+          "Distractors are true statements about AI strengths, not misconceptions, so a wrong answer doesn't diagnose anything.",
+          "Does not test the 'current information' part of the concept."
+        ],
+        "suggested_fix": "Rewrite as a positive stem, e.g. 'Priya needs exact commission totals for 40 employees. Is an AI assistant the right tool?', with distractors built on m16 and m17."
+      }
+    ],
+    "overall_notes": "Questions 1, 2, 3, and 5 are solid and diagnostic. Question 4 has a length giveaway and question 6 needs a rewrite. No question covers approved enterprise tools (c4), which is a key point in the source."
+  }
+}

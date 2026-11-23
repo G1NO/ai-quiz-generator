@@ -42,11 +42,20 @@ def build_parser() -> argparse.ArgumentParser:
         "--demo", action="store_true",
         help="Run offline with a built-in sample response (no API key needed)",
     )
+
+    from .diagnostic.cli import add_parser as add_diagnose_parser
+
+    add_diagnose_parser(sub)
     return p
 
 
 def main(argv: list[str] | None = None, client=None) -> int:
     args = build_parser().parse_args(argv)
+
+    if args.command == "diagnose":
+        from .diagnostic.cli import run as run_diagnose
+
+        return run_diagnose(args)
 
     if not args.source.exists():
         print(f"Error: can't find {args.source}", file=sys.stderr)
