@@ -22,7 +22,10 @@ class FakeMessages:
 
     def create(self, **kwargs):
         self.calls.append(kwargs)
-        block = SimpleNamespace(type="tool_use", id=f"tu_{len(self.calls)}", input=self.payloads.pop(0))
+        payload = self.payloads.pop(0)
+        if payload is None:  # model answered in plain text instead of calling the tool
+            return SimpleNamespace(content=[SimpleNamespace(type="text", text="Here's the map...")])
+        block = SimpleNamespace(type="tool_use", id=f"tu_{len(self.calls)}", input=payload)
         return SimpleNamespace(content=[block])
 
 
@@ -34,12 +37,30 @@ def fake_llm(payloads):
     return llm
 
 
-def test_returns_validated_model_and_forces_tool():
+def test_returns_validated_model_and_uses_auto_tool_choice():
     llm = fake_llm([DEMO["concept_map"]])
     cmap = build_concept_map(llm, "some source " * 30, "staff")
     assert isinstance(cmap, ConceptMap)
     call = llm.client.messages.calls[0]
-    assert call["tool_choice"] == {"type": "tool", "name": "submit_conceptmap"}
+    # Forced tool choice is rejected by newer models, so we must send "auto".
+    assert call["tool_choice"] == {"type": "auto"}
+    assert "submit_conceptmap" in call["messages"][0]["content"]
+
+
+def test_nudges_when_model_replies_in_text():
+    llm = fake_llm([None, DEMO["concept_map"]])
+    cmap = llm.structured("prompt", ConceptMap)
+    assert cmap.topic == DEMO["concept_map"]["topic"]
+    nudge = llm.client.messages.calls[1]["messages"][-1]["content"]
+    assert "submit_conceptmap" in nudge
+
+
+def test_key_whitespace_is_stripped(monkeypatch):
+    import anthropic
+    seen = {}
+    monkeypatch.setattr(anthropic, "Anthropic", lambda api_key: seen.setdefault("key", api_key))
+    LLM(api_key="  sk-ant-test\n")
+    assert seen["key"] == "sk-ant-test"
 
 
 def test_retries_with_validation_error():
