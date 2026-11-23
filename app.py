@@ -93,6 +93,23 @@ with st.sidebar:
             st.error(f"That file doesn't look like a saved project: {e}")
 
 
+def friendly_error(e: Exception) -> str:
+    """Turn API errors into something a non-developer can act on."""
+    status = getattr(e, "status_code", None)
+    if status == 401:
+        return ("That API key didn't work. Copy it again from console.anthropic.com "
+                "(use the copy button; the key is only shown once) and paste it in the sidebar.")
+    if status == 402 or "credit balance" in str(e).lower():
+        return "Your Anthropic account is out of credits. Add some under Settings → Billing in the Console."
+    if status == 404:
+        return "That model name wasn't found. Check the Model field in the sidebar."
+    if status == 429:
+        return "Hit a rate limit. Wait a minute and try again."
+    if status and status >= 500:
+        return "Claude's API had a temporary problem. Try again in a moment."
+    return f"Something went wrong: {e}"
+
+
 def get_llm() -> LLM | None:
     if not live:
         st.info("Switch to **Live** mode in the sidebar and add an API key to generate from your own content.")
@@ -142,7 +159,7 @@ with tab_src:
                         llm, st.session_state.source, st.session_state.audience, n_concepts)
                     st.success("Concept map ready. Open the **Concept map** tab.")
                 except Exception as e:
-                    st.error(f"Something went wrong: {e}")
+                    st.error(friendly_error(e))
     if words < 50:
         st.caption("Paste at least 50 words to get started.")
 
@@ -198,7 +215,7 @@ with tab_map:
                             llm, st.session_state.source, cmap, st.session_state.audience, n_questions)
                         st.success("Quiz ready. Open the **Quiz** tab.")
                     except Exception as e:
-                        st.error(f"Something went wrong: {e}")
+                        st.error(friendly_error(e))
 
 
 # ---------- 3. Quiz ----------
@@ -240,7 +257,7 @@ with tab_quiz:
                             llm, st.session_state.source, cmap, quiz, st.session_state.audience)
                         st.success("Review ready. Open the **Quality review** tab.")
                     except Exception as e:
-                        st.error(f"Something went wrong: {e}")
+                        st.error(friendly_error(e))
 
 
 # ---------- 4. Quality review ----------
