@@ -17,7 +17,7 @@ It has two modes:
 
 ## Diagnostic mode
 
-**[Try the web app →](#)** *(Streamlit link goes here)*
+**[Try the web app →](https://gino-quiz-generator.streamlit.app)** · [See the demo on my portfolio](https://ginodefalco.com/work-quiz-generator.html)
 
 ![Concept map](docs/concept-map.png)
 
