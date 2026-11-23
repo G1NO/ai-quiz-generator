@@ -114,3 +114,26 @@ def test_dot_renders(cmap, quiz):
 def test_tool_schema_has_no_refs():
     for model in (ConceptMap, Quiz, QuizEvaluation):
         assert "$ref" not in json.dumps(tool_schema(model))
+
+
+def test_shuffle_answers_spreads_the_key(quiz, cmap):
+    from quizgen.diagnostic.pipeline import shuffle_answers
+
+    for q in quiz.questions:  # simulate the LLM putting every answer at "a"
+        key = next(o for o in q.options if o.id == q.correct_option_id)
+        rest = [o for o in q.options if o is not key]
+        q.options = [key] + rest
+        for o, letter in zip(q.options, "abcd"):
+            o.id = letter
+        q.correct_option_id = "a"
+    before = {q.id: next(o for o in q.options if o.id == q.correct_option_id).text for q in quiz.questions}
+
+    shuffled = shuffle_answers(quiz, seed=1)
+    keys = [q.correct_option_id for q in shuffled.questions]
+    assert len(set(keys)) >= 3  # 6 questions over 4 slots: no letter more than twice
+    assert max(keys.count(k) for k in set(keys)) <= 2
+    for q in shuffled.questions:
+        assert [o.id for o in q.options] == ["a", "b", "c", "d"]
+        key = next(o for o in q.options if o.id == q.correct_option_id)
+        assert key.text == before[q.id] and key.misconception_id is None
+    assert not any(r.check == "answer_key_pattern" for r in checks.check_quiz_level(shuffled, cmap))
