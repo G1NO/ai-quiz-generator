@@ -32,7 +32,7 @@ st.set_page_config(page_title="AI Quiz Generator", page_icon="🧠", layout="wid
 # ---------- State ----------
 
 def init_state():
-    defaults = {"source": "", "audience": "Non-technical office employees",
+    defaults = {"flash": None, "source": "", "audience": "Non-technical office employees",
                 "cmap": None, "quiz": None, "evaluation": None, "loaded_demo": False}
     for k, v in defaults.items():
         st.session_state.setdefault(k, v)
@@ -110,6 +110,15 @@ def friendly_error(e: Exception) -> str:
     return f"Something went wrong: {e}"
 
 
+def finish_step(message: str):
+    """Save a success message and rerun, so every tab redraws from the new results.
+
+    Without the rerun, tabs drawn earlier in this run still show the old data.
+    """
+    st.session_state.flash = message
+    st.rerun()
+
+
 def get_llm() -> LLM | None:
     if not live:
         st.info("Switch to **Live** mode in the sidebar and add an API key to generate from your own content.")
@@ -127,6 +136,10 @@ st.caption(
     "Turns source material into a concept map, writes a quiz whose wrong answers each target a "
     "specific misconception, then reviews every question with an AI rubric plus rule-based checks."
 )
+
+if st.session_state.flash:
+    st.success(st.session_state.flash)
+    st.session_state.flash = None
 
 tab_src, tab_map, tab_quiz, tab_qa, tab_export = st.tabs(
     ["1 · Source", "2 · Concept map", "3 · Quiz", "4 · Quality review", "5 · Export"]
@@ -152,12 +165,12 @@ with tab_src:
     if st.button("Build concept map →", type="primary", disabled=words < 50):
         llm = get_llm()
         if llm:
-            with st.spinner("Mapping concepts, prerequisites, and misconceptions..."):
+            with st.spinner("Mapping concepts, prerequisites, and misconceptions... (usually 20–60 seconds, don't click away)"):
                 try:
                     reset_downstream("cmap")
                     st.session_state.cmap = build_concept_map(
                         llm, st.session_state.source, st.session_state.audience, n_concepts)
-                    st.success("Concept map ready. Open the **Concept map** tab.")
+                    finish_step("Concept map ready. Open the **2 · Concept map** tab.")
                 except Exception as e:
                     st.error(friendly_error(e))
     if words < 50:
@@ -208,12 +221,12 @@ with tab_map:
         if st.button("Write quiz →", type="primary"):
             llm = get_llm()
             if llm:
-                with st.spinner("Writing questions with diagnostic distractors..."):
+                with st.spinner("Writing questions with diagnostic distractors... (can take 1–2 minutes, don't click away)"):
                     try:
                         reset_downstream("quiz")
                         st.session_state.quiz = generate_quiz(
                             llm, st.session_state.source, cmap, st.session_state.audience, n_questions)
-                        st.success("Quiz ready. Open the **Quiz** tab.")
+                        finish_step("Quiz ready. Open the **3 · Quiz** tab.")
                     except Exception as e:
                         st.error(friendly_error(e))
 
@@ -251,11 +264,11 @@ with tab_quiz:
         if st.button("Run quality review →", type="primary"):
             llm = get_llm()
             if llm:
-                with st.spinner("Reviewing every question against the rubric..."):
+                with st.spinner("Reviewing every question against the rubric... (can take about a minute, don't click away)"):
                     try:
                         st.session_state.evaluation = evaluate_quiz(
                             llm, st.session_state.source, cmap, quiz, st.session_state.audience)
-                        st.success("Review ready. Open the **Quality review** tab.")
+                        finish_step("Review ready. Open the **4 · Quality review** tab.")
                     except Exception as e:
                         st.error(friendly_error(e))
 
